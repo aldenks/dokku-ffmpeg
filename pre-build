@@ -1,0 +1,24 @@
+#!/bin/bash -e
+APP="$1"; IMAGE="dokku/$APP"
+echo "-----> Injecting ffmpeg..."
+
+DATE="20140716" // TODO use right date
+INSTALL_DIR="/usr/local/bin"
+
+COMMAND=$(cat <<EOF
+export DEBIAN_FRONTEND=noninteractive
+if [ -f "$INSTALL_DIR/ffmpeg" ]; then
+    wget http://johnvansickle.com/ffmpeg/builds/ffmpeg-git-$DATE-64bit-static.tar.bz2
+    tar xjf ffmpeg-git-20140716-64bit-static.tar.bz2
+    cp ffmpeg-git-20140716-64bit-static/ffmpeg $INSTALL_DIR/ffmpeg
+    rm -r ffmpeg-git-20140716-64bit-static* # clean up
+    echo "-----> Injected ffmpeg"
+fi
+sleep 1 # wait so that docker run has not exited before docker attach
+EOF
+)
+ID=$(docker run -d $IMAGE /bin/bash -e -c "$COMMAND")
+#enable logs
+docker attach $ID
+test $(docker wait $ID) -eq 0
+docker commit $ID $IMAGE > /dev/null
