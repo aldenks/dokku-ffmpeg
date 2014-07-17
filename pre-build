@@ -1,6 +1,8 @@
 #!/bin/bash -e
+set -e
+
 APP="$1"; IMAGE="dokku/$APP"
-echo "-----> Injecting ffmpeg..."
+echo "-----> Injecting ffmpeg ..."
 
 DATE="20140716" # TODO use right date
 INSTALL_DIR="/usr/local/bin"
@@ -8,7 +10,7 @@ INSTALL_DIR="/usr/local/bin"
 COMMAND=$(cat <<EOF
 export DEBIAN_FRONTEND=noninteractive
 if [ ! -f "$INSTALL_DIR/ffmpeg" ]; then
-    wget http://johnvansickle.com/ffmpeg/builds/ffmpeg-git-$DATE-64bit-static.tar.bz2
+    wget --quiet http://johnvansickle.com/ffmpeg/builds/ffmpeg-git-$DATE-64bit-static.tar.bz2
     tar xjf ffmpeg-git-$DATE-64bit-static.tar.bz2
     cp ffmpeg-git-$DATE-64bit-static/ffmpeg $INSTALL_DIR/ffmpeg
     rm -r ffmpeg-git-$DATE-64bit-static* # clean up
