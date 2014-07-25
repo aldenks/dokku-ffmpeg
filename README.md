@@ -1,6 +1,6 @@
 # dokku-ffmpeg
 
-Install ffmpeg from http://johnvansickle.com/ffmpeg/ into a dokku container.
+Install ffmpeg into a dokku container.
 
 This plugin is based on the pattern used by https://github.com/F4-Group/dokku-apt.
 
