@@ -8,7 +8,7 @@ FFMPEG_PATH="/usr/local/bin/ffmpeg"
 
 COMMAND=$(cat <<EOF
 export DEBIAN_FRONTEND=noninteractive
-if [ ! -f $FFMPEG_PATH ]; then
+if [ ! -x $FFMPEG_PATH ]; then
     sudo apt-get install -y libmp3lame-dev libass-dev
     wget --quiet -O $FFMPEG_PATH https://www.dropbox.com/s/n7k22xr92lalioy/ffmpeg
     chmod +x $FFMPEG_PATH
